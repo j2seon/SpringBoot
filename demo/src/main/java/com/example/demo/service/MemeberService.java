@@ -11,7 +11,11 @@ import java.util.Optional;
 public class MemeberService {
 
     //회원서비스를 만들려면 repository 가 있어야된다/
-    private MemberRepository repository = new MemoryMemberRepository();
+    private final MemberRepository memberRepository ;
+
+    public MemeberService(MemberRepository memberRepository){
+        this.memberRepository = memberRepository;
+    }
 
     //회원가입 >> 가입하면 id를 반환하겠다~
     public Long join(Member member){
@@ -28,24 +32,24 @@ public class MemeberService {
         //+ 추가로result.orElseGet(); 으로 값이 있으면 꺼내! 라고도 할 수 있다.
         //++ 추가 Optional을 바로반환하는 것보다 바로 반환히는 것으로  바꿔주자!!
 
-        repository.save(member);
+        memberRepository.save(member);
         return member.getId();
     }
 
     //전체 회원 조회
     public List<Member> findMembers(){
-        return repository.findAll();
+        return memberRepository.findAll();
     }
 
     public Optional<Member> findOne(Long memberid){
-        return repository.findById(memberid);
+        return memberRepository.findById(memberid);
     }
 
 
 
     //중복회원
     private void validateDuplicate(Member member) {
-        repository.findByName(member.getName())
+        memberRepository.findByName(member.getName())
                 .ifPresent(m ->{
                     throw new  IllegalStateException("이미 존재하는 회원입니다.");
                 }); // 길어지는 로직나오면 메서드로 빼주는 것이 좋다.
