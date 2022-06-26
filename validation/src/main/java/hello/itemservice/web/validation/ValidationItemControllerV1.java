@@ -67,10 +67,11 @@ public class ValidationItemControllerV1 {
         }
 
         //검증에 실패하면? 다시 폼으로 돌아오게 하기
-        if(!errors.isEmpty()){
-            log.info("errors={}",errors);
-            model.addAttribute("errors",errors);
-            return "validation/v1/addForm";
+        if(!errors.isEmpty()) {
+            log.info("errors={}", errors);
+            model.addAttribute("errors", errors);
+            return "validation/v1/addForm"
+                    ;
         }
 
         //성공로직
